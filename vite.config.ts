@@ -1,33 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
+// PWA plugin disabled due to workbox-build dependency issues in build environment
+// Manifest.json is still available in public/ for PWA functionality
+// import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   plugins: [
     react(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      manifest: {
-        name: 'Transaction Feed Simulator',
-        short_name: 'TxSim',
-        description: 'A resilient transaction feed with optimistic updates',
-        theme_color: '#6366f1',
-        background_color: '#0f172a',
-        display: 'standalone',
-        icons: [
-          {
-            src: '/icon-192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/icon-512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
-    })
+    // PWA plugin temporarily disabled - manifest.json in public/ provides basic PWA support
+    // To re-enable: install workbox-build and uncomment VitePWA config
   ],
   server: {
     port: 3000
