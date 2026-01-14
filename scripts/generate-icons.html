@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Generator</title>
+</head>
+<body>
+  <h1>PWA Icon Generator</h1>
+  <p>Open this file in a browser and use the canvas to generate icons, or use an online tool to create 192x192 and 512x512 PNG icons.</p>
+  <p>Place them in the <code>public/</code> directory as <code>icon-192.png</code> and <code>icon-512.png</code></p>
+  
+  <canvas id="icon192" width="192" height="192" style="border: 1px solid #000; margin: 10px;"></canvas>
+  <canvas id="icon512" width="512" height="512" style="border: 1px solid #000; margin: 10px;"></canvas>
+  
+  <script>
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      
+      // Gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#6366f1');
+      gradient.addColorStop(1, '#8b5cf6');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      
+      // Draw "$" symbol
+      ctx.fillStyle = 'white';
+      ctx.font = `bold ${size * 0.5}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('$', size / 2, size / 2);
+    }
+    
+    drawIcon(document.getElementById('icon192'), 192);
+    drawIcon(document.getElementById('icon512'), 512);
+    
+    // Download functionality
+    function downloadIcon(canvas, filename) {
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+    
+    document.getElementById('icon192').addEventListener('click', () => {
+      downloadIcon(document.getElementById('icon192'), 'icon-192.png');
+    });
+    
+    document.getElementById('icon512').addEventListener('click', () => {
+      downloadIcon(document.getElementById('icon512'), 'icon-512.png');
+    });
+    
+    console.log('Click on the canvases to download the icons');
+  </script>
+</body>
+</html>
