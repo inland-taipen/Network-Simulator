@@ -75,7 +75,7 @@ export function useSendMoney() {
      * - Restores exact previous state
      * - Shows user-friendly error with retry button
      */
-    onError: (err, newTransaction, context) => {
+    onError: (err, _newTransaction, context) => {
       // ROLLBACK: Restore UI to state before optimistic update
       if (context?.previousTransactions) {
         queryClient.setQueryData(['transactions'], context.previousTransactions)
@@ -106,7 +106,7 @@ export function useSendMoney() {
      * - Updates status from "pending" to "completed"
      * - Shows success notification
      */
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, _variables, _context) => {
       // Replace optimistic transaction with real server response
       queryClient.setQueryData<Transaction[]>(['transactions'], (old = []) => {
         const filtered = old.filter((t) => !t.id.startsWith('temp-'))
